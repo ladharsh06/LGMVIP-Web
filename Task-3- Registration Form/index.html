@@ -1,0 +1,176 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration Form</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <nav>Student Registration Form</nav>
+      <div class="input-form">
+        <h1>Register Here</h1>
+        <form action="#" id="input-form">
+          <div class="input-group">
+            <input
+              type="text"
+              class="input-field"
+              id="name"
+              placeholder="Enter your name"
+            />
+            <label for="name">Name</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="email"
+              class="input-field"
+              id="email"
+              placeholder="Enter your Email"
+            />
+            <label for="email">Email</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="number"
+              class="input-field"
+              id="age"
+              placeholder="Enter your age"
+            />
+            <label for="age">Age</label>
+          </div>
+          <div class="input-group">
+            <input
+              type="text"
+              class="input-field"
+              id="addr"
+              placeholder="Enter your address"
+            />
+            <label for="addr">Address</label>
+          </div>
+          <div class="input-select">
+            <label for="gender" class="Label">Gender</label><br />
+            <input type="radio" id="male" value="Male" name="gender" />Male
+            <input
+              type="radio"
+              id="female"
+              value="Female"
+              name="gender"
+            />Female
+          </div>
+          <div class="input-select">
+            <label for="skills" class="Label">Skills</label><br />
+            <input type="checkbox" name="skills" id="Java" value="Java" />Java
+            <input type="checkbox" name="skills" id="C++" value="C++" />C++
+            <input
+              type="checkbox"
+              name="skills"
+              id="programming"
+              value="Programming"
+            />HTML
+            <input type="checkbox" name="skills" id="CSS" value="CSS" />CSS
+            <input
+              type="checkbox"
+              name="skills"
+              id="JavaScript"
+              value="JavaScript"
+            />JavaScript
+            <input
+              type="checkbox"
+              name="skills"
+              id="ReactJS"
+              value="ReactJS"
+            />ReactJS
+          </div>
+          <div class="buttons">
+            <button type="button" id="add-btn">REGISTER</button>
+            <button type="button" id="delete-btn">DELETE</button>
+          </div>
+        </form>
+      </div>
+      <div class="line"></div>
+      <div class="table">
+        <h1>Registered Students</h1>
+        <div class="scroll">
+          <table id="display">
+            <tr>
+              <th>Description</th>
+              <th>Profile</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+      var add = document.getElementById("add-btn");
+      var t = document.getElementById("display");
+
+      var row = 1;
+      add.onclick = function () {
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const age = document.getElementById("age").value;
+        const addr = document.getElementById("addr").value;
+        const img = document.createElement("img");
+
+        if (name != "" && email != "" && age != "" && addr != "") {
+          var values = [];
+          var selected_value = document.querySelectorAll(
+            'input[type="checkbox"]:checked'
+          );
+          Array.from(selected_value).forEach(function (e) {
+            values.push(e.value);
+          });
+
+          const description = `<p><strong>Name:</strong>
+         ${name}<br>
+         <strong>Email:</strong>
+          ${email}<br>
+          <strong>Age:</strong> 
+          ${age}<br>
+          <strong>Address: </strong> 
+          ${addr}<br>
+          <strong>Gender:</strong>
+           ${document.querySelector('input[type="radio"]:checked').value}
+        <br>
+        <strong>Skills:</strong> 
+        ${values.join(", ")}
+        </p> `;
+          var newRow = t.insertRow(row);
+
+          var cell1 = newRow.insertCell(0);
+          var cell2 = newRow.insertCell(1);
+
+          if (
+            document.querySelector('input[type="radio"]:checked').value ==
+            "Male"
+          ) {
+            img.setAttribute("src", "SigmaMale.jpg");
+            img.setAttribute("alt", "Male");
+          } else {
+            img.setAttribute("src", "SigmaWomen.jpg");
+            img.setAttribute("alt", "Female");
+          }
+
+          cell1.innerHTML = description;
+          cell2.appendChild(img);
+
+          row++;
+          document.getElementById("input-form").reset();
+          name = email = age = "";
+        } else {
+          alert("Please fill all the fields");
+        }
+      };
+
+      document.getElementById("delete-btn").onclick = function () {
+        if (row != 1) {
+          console.log(row);
+          row--;
+          t.deleteRow(row);
+        } else return;
+      };
+    </script>
+  </body>
+</html>
